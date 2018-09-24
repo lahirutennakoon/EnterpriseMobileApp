@@ -7,47 +7,23 @@
         <StackLayout>
             <Label FontAttributes="Bold" Grid.Column="0" Text="Basic info" Margin="4" />
 
-            <StackLayout Orientation="Horizontal">
+            <StackLayout Orientation="Vertical">
                 <Label FontAttributes="Bold" Grid.Column="0" Text="Name:" Margin="4" />
                 <Label Grid.Column="1" Text="{Binding Name}" Margin="4" />
-            </StackLayout>
-
-            <BoxView HeightRequest="2" Color="DarkGray" />
-
-            <Label FontAttributes="Bold" Grid.Column="0" Text="Username" Margin="4" />
-
-            <StackLayout Orientation="Horizontal">
-                <Label FontAttributes="Bold" Grid.Column="0" Text="Username: " Margin="4" />
+                
+                <Label FontAttributes="Bold" Grid.Column="0" Text="Username:" Margin="4" />
                 <Label Grid.Column="1" Text="{Binding Username}" Margin="4" />
-            </StackLayout>
 
-            <BoxView HeightRequest="2" Color="DarkGray" />
-
-            <Label FontAttributes="Bold" Grid.Column="0" Text="Email" Margin="4" />
-
-            <StackLayout Orientation="Horizontal">
                 <Label FontAttributes="Bold" Grid.Column="0" Text="Email:" Margin="4" />
                 <Label Grid.Column="1" Text="{Binding Email}" Margin="4" />
-            </StackLayout>
 
-            <BoxView HeightRequest="2" Color="DarkGray" />
-
-            <Label FontAttributes="Bold" Grid.Column="0" Text="Phone" Margin="4" />
-
-            <StackLayout Orientation="Horizontal">
-                <Label FontAttributes="Bold" Grid.Column="0" Text="Phone: " Margin="4" />
+                <Label FontAttributes="Bold" Grid.Column="0" Text="Phone:" Margin="4" />
                 <Label Grid.Column="1" Text="{Binding Phone}" Margin="4" />
-            </StackLayout>
 
-            <BoxView HeightRequest="2" Color="DarkGray" />
-
-            <Label FontAttributes="Bold" Grid.Column="0" Text="Website" Margin="4" />
-
-            <StackLayout Orientation="Horizontal">
                 <Label FontAttributes="Bold" Grid.Column="0" Text="Website:" Margin="4" />
                 <Label Grid.Column="1" Text="{Binding Website}" Margin="4" />
             </StackLayout>
-            
+
         </StackLayout>
     </ContentPage.Content>
     

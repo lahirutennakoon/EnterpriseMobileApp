@@ -31,29 +31,64 @@ namespace EnterpriseMobileApp
             CommentsList = new ObservableCollection<Comment>();
             CommentsListView.ItemsSource = CommentsList;
 
+            CommentsListView.ItemSelected += CommentsListView_ItemSelected;
             dataRetriever = new DataRetriever();
-            AddToolbarItem(post.Id);
+
+            CommentsListView.IsVisible = false;
+            LoadingIndicator.IsVisible = true;
+
+            LoadCommentsData(post.Id);
+            AddToolbarItem(post.UserId);
         }
 
-        private void AddToolbarItem(int PostId)
+        // Add the user icon
+        private void AddToolbarItem(int userId)
         {
-            ToolbarItem toolbarItem = new ToolbarItem("Sync", null, () =>
+            ToolbarItem toolbarItem = new ToolbarItem(Icon, "/Resources/drawable/userIcon.png", () =>
             {
-                LoadCommentsData(PostId);
+                UserIcon_Clicked(userId);
             }, 0, 0);
             ToolbarItems.Add(toolbarItem);
         }
 
         // Get the list of comments for the specified post id
-        private void LoadCommentsData(int PostId)
+        private async void LoadCommentsData(int PostId)
         {
             CommentsList.Clear();
 
-            List<Comment> comments = dataRetriever.GetCommentsForPost(PostId);
+            List<Comment> comments = await dataRetriever.GetCommentsForPost(PostId);
+
+            LoadingIndicator.IsRunning = false;
+            LoadingIndicator.IsVisible = false;
+            CommentsListView.IsVisible = true;
+
             foreach (Comment c in comments)
             {
                 CommentsList.Add(c);
             }
+        }
+
+        // Launch the email client
+        private void CommentsListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+            if (e.SelectedItem != null)
+            {
+                Comment comment = e.SelectedItem as Comment;
+                string urlToLaunch = "mailto:" + comment.Email;
+                Device.OpenUri(new System.Uri(urlToLaunch));
+            }
+
+            // Clear selection
+            CommentsListView.SelectedItem = null;
+        }
+
+        // Go to user profile page on user icon click
+        private void UserIcon_Clicked(int userId)
+        {
+            User user = dataRetriever.GetUserById(userId);
+
+            UserProfilePage userProfilePage = new UserProfilePage(user);
+            Navigation.PushAsync(userProfilePage);
         }
     }
 }

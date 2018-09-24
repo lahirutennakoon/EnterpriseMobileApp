@@ -17,6 +17,6 @@ namespace EnterpriseMobileApp.Data
         public string Body { get; set; }
 
         [JsonProperty(PropertyName = "userId")]
-        public string UserId { get; set; }
+        public int UserId { get; set; }
     }
 }

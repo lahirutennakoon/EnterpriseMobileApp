@@ -5,6 +5,7 @@ using EnterpriseMobileApp.Data;
 using System.Net;
 using Newtonsoft.Json;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace EnterpriseMobileApp.Net
 {
@@ -15,16 +16,17 @@ namespace EnterpriseMobileApp.Net
         }
 
         // Get all the posts
-        public List<Post> GetPosts()
+        public async Task<List<Post>> GetPosts()
         {
             List<Post> posts = new List<Post>();
 
             using (WebClient webClient = new WebClient())
             {
-                string json = webClient.DownloadString("https://jsonplaceholder.typicode.com/posts");
+                string json = await webClient.DownloadStringTaskAsync("https://jsonplaceholder.typicode.com/posts");
 
                 if (!string.IsNullOrEmpty(json))
                 {
+                    // Deserialize the JSON objects
                     posts = JsonConvert.DeserializeObject<Post[]>(json).ToList();
                 }            
             }
@@ -33,16 +35,17 @@ namespace EnterpriseMobileApp.Net
         }
 
         // Get all the comments for a specific post
-        public List<Comment> GetCommentsForPost(int PostId)
+        public async Task<List<Comment>> GetCommentsForPost(int PostId)
         {
             List<Comment> comments = new List<Comment>();
 
             using (WebClient webClient = new WebClient())
             {
-                string json = webClient.DownloadString("https://jsonplaceholder.typicode.com/comments?postId=" + PostId);
+                string json = await webClient.DownloadStringTaskAsync("https://jsonplaceholder.typicode.com/comments?postId=" + PostId);
 
                 if (!string.IsNullOrEmpty(json))
                 {
+                    // Deserialize the JSON objects
                     comments = JsonConvert.DeserializeObject<Comment[]>(json).ToList();
                 }
             }
@@ -50,17 +53,18 @@ namespace EnterpriseMobileApp.Net
             return comments;
         }
 
-        // Get user details by email
-        public User GetUserByEmail(string email)
+        // Get user details
+        public User GetUserById(int userId)
         {
             User user = new User();
 
             using (WebClient webClient = new WebClient())
             {
-                string json = webClient.DownloadString("https://jsonplaceholder.typicode.com/users?email=" + email);
+                string json = webClient.DownloadString("https://jsonplaceholder.typicode.com/users/" + userId);
 
                 if (!string.IsNullOrEmpty(json))
                 {
+                    // Deserialize the JSON object
                     user = JsonConvert.DeserializeObject<User>(json);
                 }
             }

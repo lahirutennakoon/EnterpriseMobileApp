@@ -24,11 +24,16 @@ namespace EnterpriseMobileApp
             Title = "Posts";
             PostsList = new ObservableCollection<Post>();
             PostsListView.ItemsSource = PostsList;
-            Console.WriteLine("abcd");
+            
             PostsListView.ItemSelected += PostsListView_ItemSelected;
 
             dataRetriever = new DataRetriever();
-            AddToolbarItem();
+
+            PostsListView.IsVisible = false;
+            LoadingIndicator.IsVisible = true;
+
+            // Load all the posts
+            LoadPostsData();
         }
 
         // Navigate to the comments page when a post is selected
@@ -42,25 +47,22 @@ namespace EnterpriseMobileApp
 
             // Clear the selection
             PostsListView.SelectedItem = null;
-        }
+        } 
 
-        private void AddToolbarItem()
-        {
-            ToolbarItem toolbarItem = new ToolbarItem("Sync", null, () =>
-            {
-                LoadPostsData();
-            }, 0, 0);
-            ToolbarItems.Add(toolbarItem);
-        }
-
-        private void LoadPostsData()
+        private async Task LoadPostsData()
         {
             PostsList.Clear();
 
-            List<Post> posts = dataRetriever.GetPosts();
+            // Get the posts
+            List<Post> posts = await dataRetriever.GetPosts();
+
+            LoadingIndicator.IsRunning = false;
+            LoadingIndicator.IsVisible = false;
+            PostsListView.IsVisible = true;
+
+            // Add each post to the list
             foreach (Post p in posts)
             {
-                Console.WriteLine("Welcome to the C# Station Tutorial!");
                 PostsList.Add(p);
             }
         }
