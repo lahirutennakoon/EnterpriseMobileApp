@@ -11,7 +11,7 @@ namespace EnterpriseMobileApp
         {
             InitializeComponent();
 
-            MainPage = new MainPage();
+            MainPage = new NavigationPage(new PostsListPage());
         }
 
         protected override void OnStart()
