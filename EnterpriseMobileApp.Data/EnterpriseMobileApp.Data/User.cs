@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 namespace EnterpriseMobileApp.Data
 {
-    class User
+    public class User
     {
         [JsonProperty(PropertyName = "id")]
         public int Id { get; set; }

@@ -49,5 +49,23 @@ namespace EnterpriseMobileApp.Net
 
             return comments;
         }
+
+        // Get user details by email
+        public User GetUserByEmail(string email)
+        {
+            User user = new User();
+
+            using (WebClient webClient = new WebClient())
+            {
+                string json = webClient.DownloadString("https://jsonplaceholder.typicode.com/users?email=" + email);
+
+                if (!string.IsNullOrEmpty(json))
+                {
+                    user = JsonConvert.DeserializeObject<User>(json);
+                }
+            }
+
+            return user;
+        }
     }
 }
